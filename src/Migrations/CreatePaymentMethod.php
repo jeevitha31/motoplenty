@@ -16,6 +16,7 @@ namespace Novalnet\Migrations;
 
 use Plenty\Modules\Payment\Method\Contracts\PaymentMethodRepositoryContract;
 use Novalnet\Helper\PaymentHelper;
+use Plenty\Plugin\Log\Loggable;
 
 /**
  * Migration to create payment mehtods
@@ -26,6 +27,8 @@ use Novalnet\Helper\PaymentHelper;
  */
 class CreatePaymentMethod
 {
+    
+    use Loggable;
     /**
      * @var PaymentMethodRepositoryContract
      */
@@ -57,9 +60,11 @@ class CreatePaymentMethod
     public function run()
     {
         
+        $this->getLogger(__METHOD__)->error('Novalnet::assignPlentyPaymentToPlentyOrder','plentymigration');
             $paymentMethodData = ['pluginKey'  => 'plenty_novalnet',
                                   'paymentKey' => 'NOVALNET',
                                   'name'       => 'Novalnet'];
+          $this->getLogger(__METHOD__)->error('Novalnet::assignPlentyPaymentToPlentyOrder',$paymentMethodData);
             $this->paymentMethodRepository->createPaymentMethod($paymentMethodData);
         
     }
